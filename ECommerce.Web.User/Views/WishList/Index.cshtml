@@ -11,7 +11,8 @@
         {
             <div class="col-md-4 mb-3">
                 <div class="card">
-                    <img src="@Url.Content(@item.Product.ImagePath)" class="card-img-top product-image" alt="@item.Product.Name">
+                    <img src='@Url.Content(@item.Product?.ImagePath?.Replace("~","https://localhost:7057"))' class="card-img-top product-image" alt="@item.Product.Name">
+
                     <div class="card-body">
                         <h5 class="card-title">@item.Product.Name</h5>
                         <p class="card-text">@item.Product.Description</p>
