@@ -1,0 +1,27 @@
+﻿@page
+@*@model NotificationsModel
+@{
+    ViewData["Title"] = "Notifications";
+}*@
+
+<h2>Notifications</h2>
+
+<ul id="notificationList">
+    <!-- Notifications will be dynamically added here -->
+</ul>
+
+<script>
+    connection.on("NewOrder", function (message) {
+        var notificationList = document.getElementById("notificationList");
+        var li = document.createElement("li");
+        li.textContent = message;
+        notificationList.appendChild(li);
+    });
+
+    connection.on("OrderStatusChanged", function (message) {
+        var notificationList = document.getElementById("notificationList");
+        var li = document.createElement("li");
+        li.textContent = message;
+        notificationList.appendChild(li);
+    });
+</script>
