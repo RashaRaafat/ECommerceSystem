@@ -1,0 +1,44 @@
+<div class="container">
+  Filter by Category
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <select class="form-control" [(ngModel)]="selectedCategory" (change)="filterProducts()">
+        <option value="-1">All Categories</option>
+        <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+      </select>
+    </div>
+  </div>
+  <!-- Add Product Button -->
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <button class="btn btn-success" (click)="navigateToAddProduct()">Add Product</button>
+    </div>
+  </div>
+
+  <!-- Product Table -->
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of products">
+            <td>{{ product.name }}</td>
+            <td>{{ product.category.name }}</td>
+            <td>{{ product.price }}</td>
+            <td>
+              <button class="btn btn-primary" (click)="editProduct(product)">Edit</button>
+              <button class="btn btn-danger" (click)="confirmDelete(product)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

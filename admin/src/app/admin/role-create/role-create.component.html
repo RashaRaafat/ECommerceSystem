@@ -1,0 +1,6 @@
+<h2>Create Role</h2>
+<form (submit)="createRole()">
+  <label for="roleName">Role Name:</label>
+  <input id="roleName" class="form-control" [(ngModel)]="roleName" name="roleName" required>
+  <button class="btn btn-primary" type="submit">Create</button>
+</form>

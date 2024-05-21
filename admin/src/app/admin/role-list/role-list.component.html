@@ -1,0 +1,8 @@
+<h2>Roles</h2>
+<ul>
+  <li *ngFor="let role of roles">{{ role.name }}</li>
+</ul>
+<!--<a routerLink="/admin/role-create">Create New Role</a>-->
+<button class="btn btn-primary" [routerLink]="['/admin/role-create']">Create New Role</button>
+<button class="btn btn-success" [routerLink]="['/admin/role-assign']">Assign User to Role</button>
+

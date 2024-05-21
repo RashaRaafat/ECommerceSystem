@@ -1,0 +1,22 @@
+<div class="container">
+
+  <h2>Assign Role</h2>
+  <form (submit)="assignRole()">
+    <label for="user">User:</label>
+    <select id="user" [(ngModel)]="selectedUser" class="form-control" name="user">
+      <option *ngFor="let user of users" [value]="user.id">{{ user.userName }}</option>
+    </select>
+
+    <label for="role">Role:</label>
+    <select id="role" [(ngModel)]="selectedRole" name="role" class="form-control">
+      <option *ngFor="let role of roles" [value]="role.name">{{ role.name }}</option>
+    </select>
+
+    <button class="btn btn-primary" type="submit">Assign Role</button>
+  </form>
+  
+  <form (submit)="removeRole()">
+    <button class="btn btn-primary" type="submit">Remove Role</button>
+  </form>
+
+</div>

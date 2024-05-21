@@ -1,0 +1,53 @@
+<div class="container" >
+  <h2>Manage Product</h2>
+  <form (ngSubmit)="onSubmit()" enctype="multipart/form-data" class="custom-form" [formGroup]="productForm">
+    <div class="form-group">
+      <label for="name">Name:<span class="text-danger">*</span></label>
+      <input type="text" class="form-control" id="name" name="name" formControlName="name" required>
+      <div *ngIf="productForm.get('name')?.invalid && (productForm.get('name')?.dirty || productForm.get('name')?.touched)">
+        <small class="text-danger">Name is required.</small>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="category">Category:<span class="text-danger">*</span></label>
+      <select class="form-control" id="category" name="category" formControlName="category" required>
+        <option value="" disabled>Select category</option>
+        <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+      </select>
+      <div *ngIf="productForm.get('category')?.invalid && (productForm.get('category')?.dirty || productForm.get('category')?.touched)">
+        <small class="text-danger" >Category is required.</small>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="price">Price:<span class="text-danger">*</span></label>
+      <input type="number" class="form-control" id="price" name="price" formControlName="price" required>
+      <div *ngIf="productForm.get('price')?.invalid && (productForm.get('price')?.dirty || productForm.get('price')?.touched)">
+        <small class="text-danger" >Price is required.</small>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="quantity">Quantity:<span class="text-danger">*</span></label>
+      <input type="number" class="form-control" id="quantity" name="quantity" formControlName="quantity" required>
+      <div *ngIf="productForm.get('quantity')?.invalid && (productForm.get('quantity')?.dirty || productForm.get('quantity')?.touched)">
+        <small class="text-danger" >Quantity is required.</small>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="description">Description:<span class="text-danger">*</span></label>
+      <textarea class="form-control" id="description" name="description" formControlName="description"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="image">Image:<span class="text-danger">*</span></label>
+      <input type="file" class="form-control-file" id="image" name="image" (change)="onFileSelected($event)" accept="image/*" required>
+      <div *ngIf="productForm.get('image')?.invalid && (productForm.get('image')?.dirty || productForm.get('image')?.touched)">
+        <small class="text-danger" >Image is required.</small>
+      </div>
+    </div>
+    <div class="form-group">
+      <img [src]="imageUrl" class="product-image" *ngIf="imageUrl">
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+  </form>
+</div>

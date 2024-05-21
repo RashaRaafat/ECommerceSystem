@@ -1,0 +1,47 @@
+<div class="container">
+  <h2>Change Order Status</h2>
+
+  <!-- Order Details -->
+  <div *ngIf="order">
+    <h3>Order Details</h3>
+    <p><strong>Order ID:</strong> {{ order.id }}</p>
+    <p><strong>Total Price:</strong> {{ order.totalPrice | currency }}</p>
+    <p><strong>Order Date:</strong> {{ order.orderDate | date }}</p>
+    <p><strong>Status:</strong> {{ getStatusName(order.status) }}</p>
+
+    <!-- Order Items -->
+    <div *ngIf="order.orderItems && order.orderItems.length > 0">
+      <h4>Order Items</h4>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of order.orderItems">
+            <td>{{ item.product?.name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.price | currency }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Status Change Form -->
+  <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="status">Status</label>
+      <select id="status" formControlName="status" class="form-control" required>
+        <option *ngFor="let key of getStatusKeys()" [value]="key">{{ key }}</option>
+      </select>
+      <div *ngIf="orderForm.get('status')?.invalid && (orderForm.get('status')?.dirty || orderForm.get('status')?.touched)">
+        <small class="text-danger">Status is required.</small>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Update Status</button>
+  </form>
+</div>
