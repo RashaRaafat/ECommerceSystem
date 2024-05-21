@@ -32,8 +32,13 @@ export class AuthService {
     return !!localStorage.getItem('token');
   }
 
-  getToken(): string | null {
-    return localStorage.getItem('token');
+  getToken(): string {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return "";
+      //throw new Error('No token found');
+    }
+    return token;
   }
 
   getUsername(): string | null {

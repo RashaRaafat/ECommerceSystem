@@ -10,14 +10,6 @@ export class AppComponent implements OnInit {
   constructor(private signalRService: SignalRService) { }
 
   ngOnInit() {
-    this.signalRService.startConnection();
-    //this.signalRService.addTransferOrderDataListener((order) => {
-    //  console.log('Order updated:', order);
-    //  alert(`Order status changed: ${order}`);
-    //});
-    //this.signalRService.addNewOrderListener((order) => {
-    //  console.log('New order placed:', order);
-    //  alert(`New order placed: ${order}`);
-    //});
+   
   }
 }

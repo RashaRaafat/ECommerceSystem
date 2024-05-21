@@ -29,14 +29,22 @@ builder.Services.AddDefaultIdentity<IdentityUser>()
 builder.Services.AddEndpointsApiExplorer();
 
 
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("AllowOrigin",
+//        builder => builder.AllowAnyOrigin()
+//                          .AllowAnyMethod()
+//                          .AllowAnyHeader());
+//});
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowOrigin",
-        builder => builder.AllowAnyOrigin()
-                          .AllowAnyMethod()
-                          .AllowAnyHeader());
+    options.AddPolicy("AllowSpecificOrigin",
+        builder => builder
+            .WithOrigins("http://localhost:4200") // Angular app URL
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials()); // Allow credentials
 });
-
 
 builder.Services.AddAuthentication("Bearer").AddJwtBearer(options =>
 {
@@ -76,7 +84,8 @@ if (app.Environment.IsDevelopment())
 app.MapControllers();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseCors("AllowOrigin");
+//app.UseCors("AllowOrigin");
+app.UseCors("AllowSpecificOrigin");
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();

@@ -61,10 +61,8 @@ namespace ECommerce.Web.Admin.Controllers
             IdentityUser user = await _userManager.GetUserAsync(User);
 
             await _orderService.UpdateOrderStatusAsync(id, orderStatus);
-            //await _hubContext.Clients.All.SendAsync("ReceiveOrderUpdate", new { id, status = orderStatus.ToString() });
-            await _hubContext.Clients.User(user.Id).SendAsync("OrderStatusChange", $"Your order number {id} status changed to {orderStatus.ToString()}.");
-
-            //await _hubContext.Clients.Group(user.Id).SendAsync("OrderStatusChange", $"Your order number {id} status changed to {orderStatus.ToString()}.");
+           
+            await _hubContext.Clients.Group(id.ToString()).SendAsync("ReceiveNotification", $"Your order {id} status has been updated to {orderStatus}");
 
 
             return NoContent();

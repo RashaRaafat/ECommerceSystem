@@ -1,53 +1,26 @@
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
-import { Subject } from 'rxjs';
-
+import { AuthService } from './auth.service'; 
 @Injectable({
   providedIn: 'root'
 })
 export class SignalRService {
   private hubConnection: signalR.HubConnection;
 
-  private newOrderSubject = new Subject<string>();
-  private orderStatusChangeSubject = new Subject<string>();
+  constructor(private authService: AuthService) {
+    const token = this.authService.getToken(); // Method to get the stored JWT token
 
-  newOrder$ = this.newOrderSubject.asObservable();
-  orderStatusChange$ = this.orderStatusChangeSubject.asObservable();
-
-  constructor() {
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('https://localhost:7249/orderHub')
+      .withUrl('https://localhost:7057/orderHub', {
+        accessTokenFactory: () => token
+      })
       .build();
-  }
 
-  public startConnection(): void {
-    this.hubConnection
-      .start()
-      .then(() => console.log('SignalR connection started'))
-      .catch(err => console.log('Error while starting SignalR connection: ' + err));
+    this.hubConnection.start().catch(err => console.error(err.toString()));
 
-    this.addListeners();
-  }
-
-  private addListeners(): void {
-    this.hubConnection.on('NewOrder', (message: string) => {
-      this.newOrderSubject.next(message);
+    this.hubConnection.on('ReceiveNotification', (message: string) => {
+      console.log(message);
+      // Display notification to the user
     });
-
-    this.hubConnection.on('OrderStatusChange', (message: string) => {
-      this.orderStatusChangeSubject.next(message);
-    });
-  }
-
-  public joinGroup(groupName: string): void {
-    this.hubConnection.invoke('JoinGroup', groupName)
-      .catch(err => console.error(`Error joining group: ${err}`));
-  }
-
-  public leaveGroup(groupName: string): void {
-    this.hubConnection.invoke('LeaveGroup', groupName)
-      .catch(err => console.error(`Error leaving group: ${err}`));
   }
 }
-
-
