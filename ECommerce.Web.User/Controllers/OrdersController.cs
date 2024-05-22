@@ -74,9 +74,9 @@ public class OrderController : Controller
         _cartService.ClearCartCookie();
 
         //await _hubContext.Clients.Group("Admins").SendAsync("NewOrder", $"{user.UserName} created a new order number {newOrder.Id}.");
-        //await _hubContext.Clients.All.SendAsync("NewOrder", $"{user.UserName} created a new order number {newOrder.Id}.");
+        await _hubContext.Clients.All.SendAsync("ReceiveNotification", $"{user.UserName} created a new order number {newOrder.Id}.");
 
-        await _hubContext.Clients.Group("Admins").SendAsync("ReceiveNotification", $"{user.UserName} created a new order: {order.Id}");
+        //await _hubContext.Clients.Group("Admins").SendAsync("ReceiveNotification", $"{user.UserName} created a new order: {order.Id}");
 
         return RedirectToAction(nameof(Index));
         //return RedirectToAction("Confirmation");

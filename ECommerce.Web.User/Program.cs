@@ -40,10 +40,13 @@ builder.Services.AddScoped<ICartService, CartService>();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowOrigin",
-        builder => builder.AllowAnyOrigin()
-                          .AllowAnyMethod()
-                          .AllowAnyHeader());
+    //options.AddPolicy("AllowOrigin",
+    options.AddPolicy("AllowSpecificOrigin",
+        builder => builder
+       .WithOrigins("http://localhost:4200") // Angular app URL
+       .AllowAnyMethod()
+       .AllowAnyHeader()
+       .AllowCredentials()); // Allow credentials
 });
 
 
@@ -86,7 +89,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseCors("AllowOrigin");
+app.UseCors("AllowSpecificOrigin");
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();

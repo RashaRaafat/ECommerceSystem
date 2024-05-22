@@ -11,7 +11,7 @@ export class SignalRService {
     const token = this.authService.getToken(); // Method to get the stored JWT token
 
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('https://localhost:7057/orderHub', {
+      .withUrl('https://localhost:7249/orderHub', {
         accessTokenFactory: () => token
       })
       .build();
@@ -20,6 +20,7 @@ export class SignalRService {
 
     this.hubConnection.on('ReceiveNotification', (message: string) => {
       console.log(message);
+      alert(message);
       // Display notification to the user
     });
   }

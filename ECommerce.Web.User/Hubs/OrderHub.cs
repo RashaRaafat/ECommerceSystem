@@ -4,22 +4,23 @@ namespace ECommerce.Web.User.Hubs
 {
     public class OrderHub : Hub
     {
-        
-            public override Task OnConnectedAsync()
+
+        public override Task OnConnectedAsync()
+        {
+            var userId = Context.UserIdentifier;
+            if (userId != null)
             {
-                var userId = Context.UserIdentifier;
                 if (Context.User.IsInRole("Admin"))
                 {
                     Groups.AddToGroupAsync(Context.ConnectionId, "Admins");
                 }
-            if (Context.User.IsInRole("User"))
-
-            {
-                // Assuming userId is the order id for simplicity, adjust as needed
-                Groups.AddToGroupAsync(Context.ConnectionId, userId);
+                else
+                {
+                    Groups.AddToGroupAsync(Context.ConnectionId, userId);
+                }
             }
-                return base.OnConnectedAsync();
-            }
+            return base.OnConnectedAsync();
+        }
        
 
         //public async Task JoinGroup(string groupName)

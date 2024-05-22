@@ -2,15 +2,11 @@
     .withUrl("/orderHub")
     .build();
 
-connection.on("NewOrder", function (message) {
+connection.on("ReceiveNotification", function (message) {
     // Display the notification for admins
-    alert(message);
+    alert("lol:" + message);
 });
 
-connection.on("OrderStatusChanged", function (message) {
-    // Display the notification for the user
-    alert(message);
-});
 
 connection.start().catch(function (err) {
     return console.error(err.toString());

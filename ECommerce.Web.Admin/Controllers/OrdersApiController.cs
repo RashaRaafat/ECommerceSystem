@@ -62,7 +62,8 @@ namespace ECommerce.Web.Admin.Controllers
 
             await _orderService.UpdateOrderStatusAsync(id, orderStatus);
            
-            await _hubContext.Clients.Group(id.ToString()).SendAsync("ReceiveNotification", $"Your order {id} status has been updated to {orderStatus}");
+            //await _hubContext.Clients.Group(id.ToString()).SendAsync("ReceiveNotification", $"Your order {id} status has been updated to {orderStatus}");
+            await _hubContext.Clients.All.SendAsync("ReceiveNotification", $"Your order {id} status has been updated to {orderStatus}");
 
 
             return NoContent();
